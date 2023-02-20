@@ -18,7 +18,6 @@ create table authentication.user_role (
 	role_id BIGINT references authentication.role
 )
 
-
 CREATE TABLE authentication.access (
 	id BIGSERIAL,
 	vw_id VARCHAR(20) NOT NULL,
@@ -41,3 +40,12 @@ CREATE TABLE authentication.request (
 	success BOOLEAN,
 	PRIMARY KEY(id)
 );
+
+insert into authentication.role values (1, "adminstrator", true);
+insert into authentication.role values (2, "inspector", false);
+insert into authentication.role values (3, "consultant", false);
+
+insert into authentication.user values ("123456789", "$2a$10$9GQAOiiinEdrI4dNYbYpku2fTstn2RKsLSjScdjav1aNZgRhZijDu", true, null)
+
+insert into authentication.user_role values ("123456789", 1);
+
