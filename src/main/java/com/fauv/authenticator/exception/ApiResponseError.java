@@ -2,12 +2,14 @@ package com.fauv.authenticator.exception;
 
 import java.time.LocalDateTime;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 
 public class ApiResponseError {
 	
 	private String message;
 	private HttpStatus code;
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	private LocalDateTime date;
 	
 	public ApiResponseError(String message, HttpStatus code) {

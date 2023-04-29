@@ -21,7 +21,7 @@ import com.fauv.authenticator.form.EditUserForm;
 import com.fauv.authenticator.form.UserForm;
 import com.fauv.authenticator.service.UserService;
 
-@CrossOrigin
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/user")
 public class UserController {

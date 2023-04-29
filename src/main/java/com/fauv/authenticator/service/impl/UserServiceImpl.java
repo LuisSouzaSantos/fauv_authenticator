@@ -15,6 +15,7 @@ import com.fauv.authenticator.entity.User;
 import com.fauv.authenticator.exception.RoleException;
 import com.fauv.authenticator.exception.UserException;
 import com.fauv.authenticator.form.EditUserForm;
+import com.fauv.authenticator.form.RegisterForm;
 import com.fauv.authenticator.form.UserForm;
 import com.fauv.authenticator.message.UserMessage;
 import com.fauv.authenticator.repository.UserRepository;
@@ -43,7 +44,6 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findById(vwId).orElse(null);
 	}
 
-	// TODO: Include VW_ID Validator
 	@Override
 	public User create(UserForm form) throws UserException, RoleException {
 		userValidator.validateUserFormFields(form);
@@ -55,19 +55,61 @@ public class UserServiceImpl implements UserService {
 		
 		Set<Role> validatedRoles = new HashSet<>();
 		
+		boolean hasConsultantRole = false;
+		boolean hasAdminRole = false;
+		
 		for (RoleDTO role : form.getRoles()) {
 			Role validatedRole = roleService.getByNameAndValidateIt(role.getName());
+			
+			if (validatedRole.getName().equals("administrator")) { hasAdminRole = true; }
+			if (validatedRole.getName().equals("consultant")) { hasConsultantRole = true; }
 			
 			validatedRoles.add(validatedRole);
 		}
 		
+		if (hasAdminRole && hasConsultantRole) { throw new UserException(UserMessage.ERROR_INVALID_GROUPED_ROLES); }
+		
 		User user = new User();
 		user.setVwId(form.getVwId());
 		user.setPassword(PasswordUtils.hashPassword(form.getPassword()));
-		user.setActive(false);
+		user.setActive(form.isActive());
 		user.setRoles(validatedRoles);
 		
 		return userRepository.save(user);
+	}
+	
+	@Override
+	public void registerUser(RegisterForm registerForm) throws UserException, RoleException {
+		userValidator.validateRegisterFormFields(registerForm);
+		
+		User duplicateUser = getByVwId(registerForm.getVwId());
+		
+		if (duplicateUser != null) { throw new UserException(UserMessage.ERROR_DUPLICATE); }
+		if (!registerForm.getPassword().equals(registerForm.getPasswordConfirmation()))  { throw new UserException(UserMessage.ERROR_PASSWORD_CONFIRMATION); }
+		
+		Set<Role> roles = new HashSet<>();
+		
+		boolean hasConsultantRole = false;
+		boolean hasAdminRole = false;
+		
+		for (String roleName : registerForm.getRoles()) {
+			Role role = roleService.getByNameAndValidateIt(roleName);
+		
+			if (role.getName().equals("administrator")) { hasAdminRole = true; }
+			if (role.getName().equals("consultant")) { hasConsultantRole = true; }
+			
+			roles.add(role);
+		}
+		
+		if (hasAdminRole && hasConsultantRole) { throw new UserException(UserMessage.ERROR_INVALID_GROUPED_ROLES); }
+		
+		User user = new User();
+		user.setVwId(registerForm.getVwId());
+		user.setPassword(PasswordUtils.hashPassword(registerForm.getPassword()));
+		user.setActive(false);
+		user.setRoles(roles);
+		
+		userRepository.save(user);
 	}
 
 	@Override

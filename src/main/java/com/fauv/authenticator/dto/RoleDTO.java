@@ -2,8 +2,9 @@ package com.fauv.authenticator.dto;
 
 public class RoleDTO {
 
+	// administrator / inspector / consultant
 	private String name;
-	private boolean admin;
+	private boolean admin = false;
 	
 	public String getName() {
 		return name;

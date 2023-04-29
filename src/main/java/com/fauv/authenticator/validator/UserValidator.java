@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.fauv.authenticator.exception.UserException;
 import com.fauv.authenticator.form.EditUserForm;
+import com.fauv.authenticator.form.RegisterForm;
 import com.fauv.authenticator.form.UserForm;
 import com.fauv.authenticator.message.UserMessage;
 
@@ -25,7 +26,14 @@ public class UserValidator {
 		if (!violations.isEmpty()) { throw new UserException(violations.toString()); }
 		
 		if (form.getRoles() == null || form.getRoles().isEmpty()) { throw new UserException(UserMessage.ROLES_FORM); }
+	}
 
+	public void validateRegisterFormFields(RegisterForm form) throws UserException {
+		Set<ConstraintViolation<RegisterForm>> violations = validator.validate(form);
+		
+		if (!violations.isEmpty()) { throw new UserException(violations.toString()); }
+		
+		if (form.getRoles() == null || form.getRoles().isEmpty()) { throw new UserException(UserMessage.ROLES_FORM); }
 	}
 	
 	public void validateEditUserFormFields(EditUserForm form) throws UserException {

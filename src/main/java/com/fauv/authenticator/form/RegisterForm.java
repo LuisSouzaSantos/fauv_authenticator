@@ -6,10 +6,9 @@ import java.util.Set;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import com.fauv.authenticator.dto.RoleDTO;
 import com.fauv.authenticator.message.UserMessage;
 
-public class UserForm {
+public class RegisterForm {
 
 	@NotBlank(message = UserMessage.VW_ID_FORM)
 	@Size(min = 7, max = 10, message = UserMessage.VW_ID_FORM_SIZE)
@@ -18,8 +17,7 @@ public class UserForm {
 	private String password;
 	@NotBlank(message = UserMessage.PASSWORD_CONFIRMATION_FORM)
 	private String passwordConfirmation;
-	private boolean active = false;
-	private Set<RoleDTO> roles = new HashSet<RoleDTO>();
+	private Set<String> roles = new HashSet<String>();
 	
 	public String getVwId() {
 		return vwId;
@@ -44,21 +42,15 @@ public class UserForm {
 	public void setPasswordConfirmation(String passwordConfirmation) {
 		this.passwordConfirmation = passwordConfirmation;
 	}
-	
-	public boolean isActive() {
-		return active;
-	}
 
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-
-	public Set<RoleDTO> getRoles() {
+	public Set<String> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Set<RoleDTO> roles) {
+	public void setRoles(Set<String> roles) {
 		this.roles = roles;
 	}
-		
+	
+	
+
 }

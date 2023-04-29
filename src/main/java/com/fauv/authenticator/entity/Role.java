@@ -51,7 +51,7 @@ public class Role implements GrantedAuthority {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(admin, id, name);
+		return Objects.hash(name);
 	}
 
 	@Override
@@ -63,12 +63,7 @@ public class Role implements GrantedAuthority {
 		if (getClass() != obj.getClass())
 			return false;
 		Role other = (Role) obj;
-		return admin == other.admin && Objects.equals(id, other.id) && Objects.equals(name, other.name);
-	}
-
-	@Override
-	public String toString() {
-		return "Role [id=" + id + ", name=" + name + ", admin=" + admin + "]";
+		return Objects.equals(name, other.name);
 	}
 
 }
