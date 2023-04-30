@@ -2,7 +2,7 @@ CREATE TABLE authentication.user (
 	vw_id VARCHAR(10) NOT NULL,
 	password VARCHAR(255) NOT NULL,
 	active BOOLEAN NOT NULL,
-	access_token VARCHAR(255) NOT NULL,
+	access_token VARCHAR(255) DEFAULT NULL,
 	PRIMARY KEY(vw_id)
 );
 
