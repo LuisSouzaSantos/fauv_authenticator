@@ -1,5 +1,6 @@
 package com.fauv.authenticator.controller;
 
+import java.security.Principal;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,11 @@ public class UserController {
 		Set<User> users = userService.getAll();
 		
 		return ResponseEntity.ok(userService.to(users));
+	}
+	
+	@GetMapping("/whoAmI")
+	public ResponseEntity<UserDTO> whoAmI(Principal principal){
+		return ResponseEntity.ok(userService.whoAmI(principal.getName()));
 	}
 
 }

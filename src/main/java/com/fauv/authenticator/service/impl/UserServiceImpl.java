@@ -169,5 +169,12 @@ public class UserServiceImpl implements UserService {
 	public Set<User> getAll() {
 		return userRepository.findAll().stream().collect(Collectors.toSet());
 	}
+
+	@Override
+	public UserDTO whoAmI(String vwId) {
+		User user = getByVwId(vwId);
+	
+		return to(user);
+	}
 	
 }

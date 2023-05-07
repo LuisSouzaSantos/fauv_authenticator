@@ -28,4 +28,6 @@ public interface UserService {
 	
 	public Set<User> getAll();
 	
+	public UserDTO whoAmI(String vwId);
+	
 }

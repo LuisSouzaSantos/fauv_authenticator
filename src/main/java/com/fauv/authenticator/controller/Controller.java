@@ -11,19 +11,19 @@ import com.fauv.authenticator.security.enums.PathAuthenticationType;
 public class Controller {
 
 	public static List<PathAuthentication>  apisGet() {
-		return Stream.of(AuthenticationController.APIS_GET).flatMap(Collection::stream).collect(Collectors.toList());
+		return Stream.of(AuthenticationController.APIS_GET, TokenController.APIS_GET).flatMap(Collection::stream).collect(Collectors.toList());
 	}
 	
 	public static List<PathAuthentication> apisPost() {
-		return Stream.of(AuthenticationController.APIS_POST).flatMap(Collection::stream).collect(Collectors.toList());
+		return Stream.of(AuthenticationController.APIS_POST, TokenController.APIS_POST).flatMap(Collection::stream).collect(Collectors.toList());
 	}
 	
 	public static List<PathAuthentication> apisPut() {
-		return Stream.of(AuthenticationController.APIS_PUT).flatMap(Collection::stream).collect(Collectors.toList());
+		return Stream.of(AuthenticationController.APIS_PUT, TokenController.APIS_PUT).flatMap(Collection::stream).collect(Collectors.toList());
 	}
 	
 	public static List<PathAuthentication> apisDelete() {
-		return Stream.of(AuthenticationController.APIS_DELETE).flatMap(Collection::stream).collect(Collectors.toList());
+		return Stream.of(AuthenticationController.APIS_DELETE, TokenController.APIS_DELETE).flatMap(Collection::stream).collect(Collectors.toList());
 	}
 	
 	public static String[] geApisGetOpened() {

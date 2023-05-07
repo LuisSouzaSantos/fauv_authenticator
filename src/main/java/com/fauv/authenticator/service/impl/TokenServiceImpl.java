@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fauv.authenticator.configuration.Properties;
+import com.fauv.authenticator.dto.TokenValidationRequest;
+import com.fauv.authenticator.dto.TokenValidationResponse;
 import com.fauv.authenticator.entity.User;
 import com.fauv.authenticator.exception.TokenException;
 import com.fauv.authenticator.message.TokenMessage;
@@ -46,6 +48,15 @@ public class TokenServiceImpl implements TokenService  {
 	@Override
 	public String getUsername(String token) {
 		return getJwtUtils().getSubject(token);
+	}
+	
+	@Override
+	public TokenValidationResponse validateCurrentToken(TokenValidationRequest tokenValidationRequest) {
+		TokenValidationResponse tokenValidation = new TokenValidationResponse();
+				
+		tokenValidation.setValid(tokenValidation != null ? isValid(tokenValidationRequest.getValue()): false);
+		
+		return tokenValidation;
 	}
 	
 	private JwtUtils getJwtUtils() {
