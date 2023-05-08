@@ -135,7 +135,7 @@ public class UserServiceImpl implements UserService {
 		editedUser.setActive(form.isActive());
 		editedUser.setRoles(validatedRoles);
 		
-		return editedUser;
+		return userRepository.save(editedUser);
 	}
 
 	@Override
